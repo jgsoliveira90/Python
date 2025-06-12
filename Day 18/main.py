@@ -1,42 +1,56 @@
 import turtle as tt
 import random as rd
 
-screen = tt.Screen()
-screen.setup(500, 400)
-aposta = screen.textinput("Aposte em qual tartaruga vai vencer.", "Escolha uma cor dentre as cores do arco Iris")
+tim = tt.Turtle()
+tim.shape("turtle")
+tt.colormode(255)
+tim.pensize(2)
+tim.speed("fastest")
+tim.penup()
+num_linhas = 10
+num_colunas = 10
+espaco = 90
 
-eixoY = 0
-turtles = []
-colors = ["red", "orange", "yellow", "green", "blue", "purple", "black"]
+# Começa no canto superior esquerdo
+start_x = - (num_colunas // 2) * espaco
+start_y = (num_linhas // 2) * espaco
+
+tim.setpos(start_x, start_y)
+
+# def desenhar(numero_de_lados):
+#     angulo = 360/numero_de_lados
+#     for _ in range(numero_de_lados):
+#         tim.forward(100)
+#         tim.right(angulo)
+#
+# def aleatorio():
+#     angulo = rd.choice([0, 90, 180, 270])
+#     tim.forward(40)
+#     tim.setheading(angulo)
+#
+# def desenhar_circulo():
+#     heading = tim.heading()
+#     tim.setheading(heading + 10)
+#     tim.circle(100)
+
+# for i in range(3,11):
+#     r = rd.randint(0, 255)
+#     g = rd.randint(0, 255)
+#     b = rd.randint(0, 255)
+#     tim.pencolor(r, g, b)
+#     aleatorio()
+
+for linha in range(num_linhas):
+    for coluna in range(num_colunas):
+        r = rd.randint(0, 255)
+        g = rd.randint(0, 255)
+        b = rd.randint(0, 255)
+        tim.pencolor(r, g, b)
+        tim.dot(20)
+        tim.forward(espaco)
+
+    tim.setpos(start_x, start_y - espaco * (linha + 1))
 
 
-def cria_tartaruga():
-    t = tt.Turtle(shape="turtle")
-    t.color(color)
-    t.penup()
-    t.goto(x=-230, y=eixoY)
-    turtles.append(t)
 
-
-for i in range(7):
-    color = rd.choice(colors)
-    cria_tartaruga()
-    colors.remove(color)
-    eixoY = eixoY+30
-
-acabou_a_corrida = True
-
-while acabou_a_corrida:
-    for x in turtles:
-        if x.xcor() > 230:
-            acabou_a_corrida = False
-            if aposta == x.pencolor():
-                print("VOCE ACERTOU A COR!")
-            else:
-                print(f"Acabou a corrida das turtles, o vencedor foi: {x.pencolor()}")
-
-        dist = rd.randint(0, 15)
-        x.forward(dist)
-
-
-screen.exitonclick()
+tt.Screen().exitonclick()
